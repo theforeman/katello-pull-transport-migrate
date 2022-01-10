@@ -4,19 +4,19 @@ _katello-pull-transport-migrate_ is a script which can be run on a client to mig
 
 ## What it does
 * Gets configuration from `subscription-manager config --list`
-* Writes correct configuration in config.toml based on subscription-manager config
-* Enables pull transport daemon service (yggdrasild) on the client and displays status
+* Writes correct configuration in `config.toml` based on subscription-manager config
+* Enables pull transport daemon service (`yggdrasild`) on the client and displays status
 
 After a successful run, it is safe to remove katello-agent from the client.
 
 ## Prerequisites
 
 ### Server
-(the following soon to be done for you by foreman-installer)
+(the following soon to be done for you by foreman-installer - [#34239](https://projects.theforeman.org/issues/34239))
 
 * Message broker such as `mosquitto` running
 * smart_proxy_remote_execution_ssh configured as follows
-```
+```yaml
 # /etc/foreman-proxy/settings.d/remote_execution_ssh.yml
 :mqtt_broker: localhost
 :mqtt_port: 1883
@@ -29,7 +29,7 @@ After a successful run, it is safe to remove katello-agent from the client.
 
 ## Run
 
-```
+```sh
 # set $SBINDIR if it's other than /usr/sbin
 ./katello-pull-transport-migrate
 ```
