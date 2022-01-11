@@ -31,7 +31,7 @@ fi
 # fail if client is not registered to a Katello
 if ! grep -q 'prefix = \/rhsm' $KPPTEMPFILE; then
     echo "Client is registered to RHSM; exiting"
-    exit 2
+    exit 1
 fi
 
 # set SYSCONFDIR to /etc if it is not set
