@@ -30,7 +30,6 @@ After a successful run, it is safe to remove katello-agent from the client.
 ## Run
 
 ```sh
-# set $SBINDIR if it's other than /usr/sbin
 ./katello-pull-transport-migrate
 ```
 

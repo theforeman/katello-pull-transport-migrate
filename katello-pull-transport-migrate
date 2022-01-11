@@ -1,14 +1,9 @@
 #!/bin/sh
 
-# set SBINDIR to /sbin if it is not set
-if [ -z "$SBINDIR" ]; then
-    SBINDIR=/usr/sbin
-fi
-
 # check if system is registered
 subscription-manager identity > /dev/null
 if [ $? -ne 0 ]; then
-    echo "Please register with subscription-manager first, then re-run `$SBINDIR/katello-pull-transport-migrate`."
+    echo "Please register with subscription-manager first, then re-run `$0`."
     exit 1
 fi
 
