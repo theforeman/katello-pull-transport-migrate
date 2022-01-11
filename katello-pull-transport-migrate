@@ -8,7 +8,7 @@ fi
 # check if system is registered
 subscription-manager identity > /dev/null
 if [ $? -ne 0 ]; then
-    echo "Please register with subscription-manager first, then re-run `$SBINDIR/katello-pull-transport-migrate`."
+    echo "Please register with subscription-manager first, then re-run '$SBINDIR/katello-pull-transport-migrate'."
     exit 1
 fi
 
@@ -24,7 +24,7 @@ SERVER_NAME=$(grep 'hostname = ' $KPPTEMPFILE | cut -d= -f2 | xargs | cut -d ' '
 
 # fail if no server name, cert dir, or ca file
 if [ -z "$SERVER_NAME" ] || [ -z "$CONSUMER_CERT_DIR" ] || [ -z "$CA_FILE" ]; then
-    echo "Unable to determine config from `subscription-manager config --list`; exiting"
+    echo "Unable to determine config from 'subscription-manager config --list'; exiting"
     exit 1
 fi
 
@@ -55,7 +55,7 @@ log-level = "error"
 EOF
 
 else
-    echo "$SYSCONFDIR/yggdrasil/config.toml not found! Did `yum install yggdrasil` succeed?"
+    echo "$SYSCONFDIR/yggdrasil/config.toml not found! Did 'yum install yggdrasil' succeed?"
     exit 1
 fi
 
