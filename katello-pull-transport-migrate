@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # check if system is registered
 subscription-manager identity > /dev/null
@@ -6,6 +6,8 @@ if [ $? -ne 0 ]; then
     echo "Please register with subscription-manager first, then re-run '$0'."
     exit 1
 fi
+
+set -e
 
 echo "Getting configuration from subscription-manager..."
 KPPTEMPFILE=$(mktemp kpp_tempfile_XXXXXXXX)
