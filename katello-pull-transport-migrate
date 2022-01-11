@@ -62,8 +62,7 @@ fi
 
 # start the yggdrasild service
 echo "Starting yggdrasild..."
-systemctl enable yggdrasild
-systemctl start yggdrasild
+systemctl enable --now yggdrasild
 
 # check status of yggdrasild and fail if it is not running
 # possible failure reason: incorrect protocol (should be tcp:// or mqtt://) or port (should be 1883)
