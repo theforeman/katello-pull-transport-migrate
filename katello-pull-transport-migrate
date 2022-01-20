@@ -1,19 +1,17 @@
-#!/bin/sh
-
-# set SBINDIR to /sbin if it is not set
-if [ -z "$SBINDIR" ]; then
-    SBINDIR=/usr/sbin
-fi
+#!/bin/bash
 
 # check if system is registered
 subscription-manager identity > /dev/null
 if [ $? -ne 0 ]; then
-    echo "Please register with subscription-manager first, then re-run `$SBINDIR/katello-pull-transport-migrate`."
+    echo "Please register with subscription-manager first, then re-run '$0'."
     exit 1
 fi
 
+set -e
+
 echo "Getting configuration from subscription-manager..."
 KPPTEMPFILE=$(mktemp kpp_tempfile_XXXXXXXX)
+trap "rm -f $KPPTEMPFILE" ERR EXIT
 subscription-manager config --list > $KPPTEMPFILE
 CONSUMER_CERT_DIR=$(grep 'consumercertdir' $KPPTEMPFILE | cut -d= -f2 | xargs | sed 's/[][]//g')
 CERT_FILE=$CONSUMER_CERT_DIR/cert.pem
@@ -23,17 +21,15 @@ SERVER_NAME=$(grep 'hostname = ' $KPPTEMPFILE | cut -d= -f2 | xargs | cut -d ' '
 
 # fail if no server name, cert dir, or ca file
 if [ -z "$SERVER_NAME" ] || [ -z "$CONSUMER_CERT_DIR" ] || [ -z "$CA_FILE" ]; then
-    echo "Unable to determine config from `subscription-manager config --list`; exiting"
+    echo "Unable to determine config from 'subscription-manager config --list'; exiting"
     exit 1
 fi
 
 # fail if client is not registered to a Katello
 if ! grep -q 'prefix = \/rhsm' $KPPTEMPFILE; then
     echo "Client is registered to RHSM; exiting"
-    exit 2
+    exit 1
 fi
-
-rm -f $KPPTEMPFILE
 
 # set SYSCONFDIR to /etc if it is not set
 if [ -z "$SYSCONFDIR" ]; then
@@ -56,14 +52,13 @@ log-level = "error"
 EOF
 
 else
-    echo "$SYSCONFDIR/yggdrasil/config.toml not found! Did `yum install yggdrasil` succeed?"
+    echo "$SYSCONFDIR/yggdrasil/config.toml not found! Did 'yum install yggdrasil' succeed?"
     exit 1
 fi
 
 # start the yggdrasild service
 echo "Starting yggdrasild..."
-systemctl enable yggdrasild
-systemctl start yggdrasild
+systemctl enable --now yggdrasild
 
 # check status of yggdrasild and fail if it is not running
 # possible failure reason: incorrect protocol (should be tcp:// or mqtt://) or port (should be 1883)
