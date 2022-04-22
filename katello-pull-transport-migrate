@@ -44,7 +44,7 @@ if [ -f $CONFIGTOML ]; then
     cat <<EOF > $CONFIGTOML
 # yggdrasil global configuration settings written by katello-pull-transport-migrate
 
-broker = ["tcp://$SERVER_NAME:1883"]
+broker = ["mqtts://$SERVER_NAME:1883"]
 cert-file = "$CERT_FILE"
 key-file = "$KEY_FILE"
 ca-root = ["$CA_FILE"]
