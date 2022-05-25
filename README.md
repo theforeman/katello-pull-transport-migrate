@@ -12,19 +12,19 @@ After a successful run, it is safe to remove katello-agent from the client.
 ## Prerequisites
 
 ### Server
-(the following soon to be done for you by foreman-installer - [#34239](https://projects.theforeman.org/issues/34239))
+* Foreman version 3.3 or later
+* foreman_proxy_remote_execution v ?.?? or later
 
-* Message broker such as `mosquitto` running
-* smart_proxy_remote_execution_ssh configured as follows
-```yaml
-# /etc/foreman-proxy/settings.d/remote_execution_ssh.yml
-:mqtt_broker: localhost
-:mqtt_port: 1883
-:mode: pull-mqtt
+Run `foreman-installer` with the following options:
+
+```
+foreman-installer \
+  --enable-foreman-proxy-plugin-remote-execution-script \
+  --foreman-proxy-plugin-remote-execution-script-mode pull-mqtt
 ```
 
 ### Client
-* `yggdrasil` and `foreman_ygg_worker` RPMs installed
+* `katello-pull-transport-migrate` RPM installed (this will install the two dependencies, `yggdrasil` and `foreman_ygg_worker`)
 * Registered to Katello (script will exit if client is registered directly to RHSM)
 
 ## Run
