@@ -13,7 +13,8 @@ After a successful run, it is safe to remove katello-agent from the client.
 
 ### Server
 * Foreman version 3.3 or later
-* foreman_proxy_remote_execution v ?.?? or later
+* foreman_remote_execution version 7.0 or later
+* smart_proxy_remote_execution_ssh version 0.7.0 or later
 
 Run `foreman-installer` with the following options:
 
