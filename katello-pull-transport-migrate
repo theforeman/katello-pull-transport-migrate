@@ -26,7 +26,7 @@ if [ -z "$SERVER_NAME" ] || [ -z "$CONSUMER_CERT_DIR" ] || [ -z "$CA_FILE" ]; th
 fi
 
 # fail if client is not registered to a Katello
-if ! grep -q 'prefix = \/rhsm' $KPPTEMPFILE; then
+if ! grep -q 'prefix = /rhsm' $KPPTEMPFILE; then
     echo "Client is registered to RHSM; exiting"
     exit 1
 fi
